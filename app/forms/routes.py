@@ -1,16 +1,21 @@
-from fastapi import APIRouter, status
+from typing import List
+
+from fastapi import APIRouter, status, Path, Body
 from fastapi.responses import JSONResponse
 
 from app.forms.crud import add_form_template, get_form_templates, get_form_template, update_form_template, \
     delete_form_template_from_db
 from app.forms.models import GetFormRequest, FormStructureTemplate
+from app.forms.utils import search_for_form
 
 forms = APIRouter()
 
 
-@forms.post('/get_form/', status_code=status.HTTP_200_OK, tags=["get_form"])
-def get_form(fields: GetFormRequest):
-    return fields
+@forms.post(
+    '/get_form/', status_code=status.HTTP_200_OK, tags=["get_form"])
+def get_form(form_request: List[GetFormRequest] = Body(...)):
+    search_result = search_for_form([form.model_dump() for form in form_request])
+    return search_result
 
 
 @forms.post('/create_form_template/',
