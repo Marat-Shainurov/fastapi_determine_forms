@@ -27,11 +27,5 @@ class FormStructureTemplate(BaseModel):
 
 
 class GetFormRequest(BaseModel):
-    form_to_check: Dict[str, str] = Field(
-        ...,
-        example={
-            "field_name_1": "value_1",
-            "field_name_2": "value_2",
-            "field_name_n": "value_n"
-        }
-    )
+    field_name: str = Field(...)
+    field_value: str = Field(...)
