@@ -1,11 +1,11 @@
-from typing import List
+from typing import List, Dict
 
 from fastapi import APIRouter, status, Body, Query
 from fastapi.responses import JSONResponse
 
 from app.forms.crud import add_form_template, get_form_templates, get_form_template, update_form_template, \
     delete_form_template_from_db
-from app.forms.models import GetFormRequest, FormStructureTemplate
+from app.forms.models import FormStructureTemplate
 from app.forms.utils import search_for_form
 
 forms = APIRouter()
@@ -13,7 +13,13 @@ forms = APIRouter()
 
 @forms.post(
     '/get_form/', status_code=status.HTTP_200_OK, tags=["get_form"])
-def get_form(form_request: List[GetFormRequest] = Body(...)):
+def get_form(form_request: Dict[str, str] = Body(..., examples=[
+    {
+        "field_name_1": "fields_value",
+        "field_name_2": "fields_value",
+        "field_name_n": "fields_value"
+    }
+])):
     """
     Endpoint searches the form template which has **all the fields names provided in form_request**.
     If the form is found and **all fields values in form_request pass the data type validation process**,
@@ -21,7 +27,7 @@ def get_form(form_request: List[GetFormRequest] = Body(...)):
 
     - **_form_request_**: request form to match stored form templates with.
     """
-    search_result = search_for_form([form.model_dump() for form in form_request])
+    search_result = search_for_form(form_request)
     return search_result
 
 

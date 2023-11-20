@@ -48,15 +48,15 @@ def test_get_form_successful(cleanup_database):
     response_template = client.post('/create_form_template/', json=new_template.model_dump())
     assert response_template.status_code == status.HTTP_201_CREATED
 
-    request_data = [
-        {"field_name": "date_test_field", "field_value": "2023-11-20"},
-        {"field_name": "phone_test_field", "field_value": "+7 999 888 88 88"},
-        {"field_name": "email_test_field", "field_value": "m_shainurov@mail.com"},
-        {"field_name": "text_test_field", "field_value": "some value"},
-        {"field_name": "the_fifth_field", "field_value": "some text"},
-        {"field_name": "the_sixth_field", "field_value": "some content"},
-        {"field_name": "extra_date_fields", "field_value": "12-11-2023"},
-    ]
+    request_data = {
+        "date_test_field": "2023-11-20",
+        "phone_test_field": "+7 999 888 88 88",
+        "email_test_field": "m_shainurov@mail.com",
+        "text_test_field": "some value",
+        "the_fifth_field": "some text",
+        "the_sixth_field": "some content",
+        "extra_date_fields": "12-11-2023",
+    }
     response_get_form = client.post('/get_form/', json=request_data)
     assert response_get_form.json() == test_form['name']
 
@@ -65,12 +65,12 @@ def test_get_form_invalid_date(cleanup_database):
     new_template = FormStructureTemplate(**test_form)
     response_template = client.post('/create_form_template/', json=new_template.model_dump())
     assert response_template.status_code == status.HTTP_201_CREATED
-    request_data = [
-        {"field_name": "date_test_field", "field_value": "2023,11,20"},
-        {"field_name": "phone_test_field", "field_value": "+7 999 888 88 88"},
-        {"field_name": "email_test_field", "field_value": "m_shainurov@mail.com"},
-        {"field_name": "text_test_field", "field_value": "some value"}
-    ]
+    request_data = {
+        "date_test_field": "2023,11,20",
+        "phone_test_field": "+7 999 888 88 88",
+        "email_test_field": "m_shainurov@mail.com",
+        "text_test_field": "some value"
+    }
     response_get_form = client.post('/get_form/', json=request_data)
     assert response_get_form.status_code == status.HTTP_400_BAD_REQUEST
     assert response_get_form.json()['detail'] == 'Invalid "date_test_field" field value. Data type "date"'
@@ -80,12 +80,12 @@ def test_get_form_invalid_email(cleanup_database):
     new_template = FormStructureTemplate(**test_form)
     response_template = client.post('/create_form_template/', json=new_template.model_dump())
     assert response_template.status_code == status.HTTP_201_CREATED
-    request_data = [
-        {"field_name": "date_test_field", "field_value": "2023-11-20"},
-        {"field_name": "phone_test_field", "field_value": "+7 999 888 88 88"},
-        {"field_name": "email_test_field", "field_value": "m_shainurovmail.com"},
-        {"field_name": "text_test_field", "field_value": "some value"}
-    ]
+    request_data = {
+        "date_test_field": "2023-11-20",
+        "phone_test_field": "+7 999 888 88 88",
+        "email_test_field": "m_shainurovmail.com",
+        "text_test_field": "some value"
+    }
     response_get_form = client.post('/get_form/', json=request_data)
     assert response_get_form.status_code == status.HTTP_400_BAD_REQUEST
     assert response_get_form.json()['detail'] == 'Invalid "email_test_field" field value. Data type "email"'
@@ -95,12 +95,12 @@ def test_get_form_invalid_phone(cleanup_database):
     new_template = FormStructureTemplate(**test_form)
     response_template = client.post('/create_form_template/', json=new_template.model_dump())
     assert response_template.status_code == status.HTTP_201_CREATED
-    request_data = [
-        {"field_name": "date_test_field", "field_value": "2023-11-20"},
-        {"field_name": "phone_test_field", "field_value": "+7 9998888888"},
-        {"field_name": "email_test_field", "field_value": "m_shainurov@mail.com"},
-        {"field_name": "text_test_field", "field_value": "some value"}
-    ]
+    request_data = {
+        "date_test_field": "2023-11-20",
+        "phone_test_field": "+7 9998888888",
+        "email_test_field": "m_shainurov@mail.com",
+        "text_test_field": "some value"
+    }
     response_get_form = client.post('/get_form/', json=request_data)
     assert response_get_form.status_code == status.HTTP_400_BAD_REQUEST
     assert response_get_form.json()['detail'] == 'Invalid "phone_test_field" field value. Data type "phone"'
@@ -110,12 +110,12 @@ def test_get_form_invalid_phone_no_code(cleanup_database):
     new_template = FormStructureTemplate(**test_form)
     response_template = client.post('/create_form_template/', json=new_template.model_dump())
     assert response_template.status_code == status.HTTP_201_CREATED
-    request_data = [
-        {"field_name": "date_test_field", "field_value": "2023-11-20"},
-        {"field_name": "phone_test_field", "field_value": "8 999 888 88 88"},
-        {"field_name": "email_test_field", "field_value": "m_shainurov@mail.com"},
-        {"field_name": "text_test_field", "field_value": "some value"}
-    ]
+    request_data = {
+        "date_test_field": "2023-11-20",
+        "phone_test_field": "8 9998888888",
+        "email_test_field": "m_shainurov@mail.com",
+        "text_test_field": "some value"
+    }
     response_get_form = client.post('/get_form/', json=request_data)
     assert response_get_form.status_code == status.HTTP_400_BAD_REQUEST
     assert response_get_form.json()['detail'] == 'Invalid "phone_test_field" field value. Data type "phone"'
@@ -126,15 +126,13 @@ def test_get_form_no_form_found(cleanup_database):
     response_template = client.post('/create_form_template/', json=new_template.model_dump())
     assert response_template.status_code == status.HTTP_201_CREATED
 
-    request_data_1 = [
-        {"field_name": "date_test_field", "field_value": "2023-11-20"},
-        {"field_name": "phone_test_field", "field_value": "+7 999 888 88 88"},
-        {"field_name": "email_test_field", "field_value": "m_shainurov@mail.com"}
-    ]
+    request_data_1 = {
+        "date_test_field": "2023-11-20",
+        "phone_test_field": "+7 999 888 88 88",
+    }
     response_get_form = client.post('/get_form/', json=request_data_1)
     assert response_get_form.status_code == status.HTTP_200_OK
     assert response_get_form.json() == {
         'date_test_field': 'date',
-        'phone_test_field': 'phone',
-        'email_test_field': 'email'
+        'phone_test_field': 'phone'
     }

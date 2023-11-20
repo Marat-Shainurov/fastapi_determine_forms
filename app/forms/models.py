@@ -25,8 +25,3 @@ class FormStructureTemplate(BaseModel):
                     detail=f"Invalid field type - {field_type}. Supported types: email, phone, date, text."
                 )
         return data
-
-
-class GetFormRequest(BaseModel):
-    field_name: str = Field(...)
-    field_value: str = Field(...)
