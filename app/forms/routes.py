@@ -15,9 +15,9 @@ forms = APIRouter()
     '/get_form/', status_code=status.HTTP_200_OK, tags=["get_form"])
 def get_form(form_request: Dict[str, str] = Body(..., examples=[
     {
-        "field_name_1": "fields_value",
-        "field_name_2": "fields_value",
-        "field_name_n": "fields_value"
+        "field_name_1": "field_value",
+        "field_name_2": "field_value",
+        "field_name_n": "field_value"
     }
 ])):
     """
