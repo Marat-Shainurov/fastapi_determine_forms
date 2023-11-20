@@ -12,10 +12,10 @@ Main stack and tools: FastAPI, MongoDB, Pydantic, pytest.
    - docker-compose up
 
 3. Read the project's documentation (swagger or redoc):
-   - http://127.0.0.1:8000/docs/
-   - http://127.0.0.1:8000/redoc/
+   - http://localhost:8000/docs/
+   - http://localhost:8000/redoc/
 
-4. Go to the main page on your browser http://127.0.0.1:8000/docs and start working with the app's endpoints.
+4. Go to the main page on your browser http://localhost:8000/docs and start working with the app's endpoints.
 
 # Testing
 1. All the tests are run during the docker startup process (run_tests.sh). \
