@@ -16,6 +16,12 @@ Main stack and tools: FastAPI, MongoDB, Pydantic, pytest.
    - http://localhost:8000/redoc/
 
 4. Go to the main page on your browser http://localhost:8000/docs and start working with the app's endpoints.
+   - /get_form
+   - /create_form_template
+   - /get_form_templates_list
+   - /retrieve_form_template/{form_name}
+   - /put_form_template/{form_name}
+   - /delete_form_template/{form_name}
 
 # Testing
 1. All the tests are run during the docker startup process (run_tests.sh). \

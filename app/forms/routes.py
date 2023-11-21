@@ -12,7 +12,7 @@ forms = APIRouter()
 
 
 @forms.post(
-    '/get_form/', status_code=status.HTTP_200_OK, tags=["get_form"])
+    '/get_form', status_code=status.HTTP_200_OK, tags=["get_form"])
 def get_form(form_request: Dict[str, str] = Body(..., examples=[
     {
         "field_name_1": "field_value",
@@ -31,7 +31,7 @@ def get_form(form_request: Dict[str, str] = Body(..., examples=[
     return search_result
 
 
-@forms.post('/create_form_template/',
+@forms.post('/create_form_template',
             response_model=FormStructureTemplate, status_code=status.HTTP_201_CREATED, tags=["form_templates"])
 def create_form_template(form_template: FormStructureTemplate):
     """
@@ -47,7 +47,7 @@ def create_form_template(form_template: FormStructureTemplate):
     return new_form_template
 
 
-@forms.get('/get_form_templates_list/',
+@forms.get('/get_form_templates_list',
            response_model=list[FormStructureTemplate], status_code=status.HTTP_200_OK, tags=["form_templates"])
 def get_form_templates_list():
     """
@@ -70,7 +70,7 @@ def retrieve_form_template(form_name: str):
     return get_form_template(form_name)
 
 
-@forms.put('/put_form_template/{form_name}/',
+@forms.put('/put_form_template/{form_name}',
            response_model=FormStructureTemplate, status_code=status.HTTP_200_OK, tags=["form_templates"])
 def put_form_template(form_name: str, form_template: FormStructureTemplate):
     """
@@ -85,7 +85,7 @@ def put_form_template(form_name: str, form_template: FormStructureTemplate):
     return update_form_template(form_name, form_data)
 
 
-@forms.delete('/delete_form_template/{form_name}/',
+@forms.delete('/delete_form_template/{form_name}',
               tags=["form_templates"], status_code=status.HTTP_204_NO_CONTENT)
 def delete_form_template(form_name: str):
     """
