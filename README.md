@@ -24,6 +24,6 @@ Main stack and tools: FastAPI, MongoDB, Pydantic, pytest.
    - /delete_form_template/{form_name}
 
 # Testing
-1. All the tests are run during the docker startup process (run_tests.sh). \
+1. All the tests are run during the docker startup process automatically (run_tests.sh). \
    Run tests manually:
    - docker-compose exec app pytest -vv
